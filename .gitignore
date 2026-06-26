@@ -1,0 +1,38 @@
+# Virtual Environment
+venv/
+
+# Artifacts (models + data - large files)
+artifacts/
+
+# MLflow runs
+mlruns/
+
+# Data folders
+kidney-ct-scan-image/
+
+# Zip files
+*.zip
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+cnnClassifier.egg-info/
+
+# Scores & logs
+scores.json
+logs/
+*.log
+
+# Jupyter
+research/
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables (future use)
+.env
