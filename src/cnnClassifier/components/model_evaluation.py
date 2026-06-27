@@ -1,7 +1,7 @@
 import tensorflow as tf
 from pathlib import Path
 import mlflow
-import mlflow.keras
+import mlflow.tensorflow
 from urllib.parse import urlparse
 from cnnClassifier.entity.config_entity import EvaluationConfig
 from cnnClassifier.utils.common import save_json
@@ -59,6 +59,6 @@ class Evaluation:
                 {"loss": self.score[0], "accuracy": self.score[1]}
             )
             if tracking_url_type_store != "file":
-                mlflow.keras.log_model(self.model, "model", registered_model_name="VGG16Model")
+                mlflow.tensorflow.log_model(self.model, "model", registered_model_name="VGG16Model")
             else:
-                mlflow.keras.log_model(self.model, "model")
+                mlflow.tensorflow.log_model(self.model, "model")
