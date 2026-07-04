@@ -1,5 +1,5 @@
 import numpy as np
-from tensorflow.keras.models import load_model
+import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 import os
 
@@ -9,19 +9,24 @@ class PredictionPipeline:
         self.filename = filename
 
     def predict(self):
-        model = load_model(
-            os.path.join("artifacts", "training", "model.h5"),
-            compile=False
+        model = tf.saved_model.load(
+            os.path.join("artifacts", "training", "saved_model")
         )
+        infer = model.signatures["serving_default"]
 
         test_image = image.load_img(self.filename, target_size=(224, 224))
         test_image = image.img_to_array(test_image)
         test_image = np.expand_dims(test_image, axis=0)
-        result = np.argmax(model.predict(test_image), axis=1)
+        test_image = test_image / 255.0
+        test_tensor = tf.constant(test_image, dtype=tf.float32)
+
+        predictions = infer(test_tensor)
+        output = list(predictions.values())[0].numpy()
+        result = np.argmax(output, axis=1)
 
         if result[0] == 1:
             prediction = "Tumor"
         else:
             prediction = "Normal"
-            
+
         return [{"image": prediction}]

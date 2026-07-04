@@ -36,3 +36,7 @@ Thumbs.db
 
 # Environment variables (future use)
 .env
+
+# Saved Model (too large for GitHub)
+artifacts/training/saved_model/
+artifacts/training/model_weights.weights.h5
